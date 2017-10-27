@@ -1,0 +1,42 @@
+{
+  "name": "api",
+  "version": "2.0.2",
+  "description": "",
+  "main": "apimain.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ali-oss": "^4.8.0",
+    "async": "^2.1.4",
+    "connect-redis": "^3.2.0",
+    "ejs": "^2.5.5",
+    "excel-export": "^0.5.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "fibers": "^1.0.15",
+    "formidable": "^1.1.1",
+    "generic-pool": "^2.4.2",
+    "memory-cache": "^0.1.6",
+    "moment": "^2.17.0",
+    "mongodb": "^2.2.11",
+    "mysql": "^2.14.1",
+    "node-schedule": "^1.2.0",
+    "pg": "^4.5.1",
+    "png-word": "0.0.7",
+    "querystring": "^0.2.0",
+    "redis": "^2.6.3",
+    "rongcloud-sdk": "^1.0.3",
+    "socket.io": "^2.0.3",
+    "sprintf-js": "^1.0.3",
+    "sqlite3": "^3.1.8",
+    "transliteration": "^1.1.16",
+    "uuid": "^3.0.1",
+    "weixin-pay": "^1.1.7",
+    "xml2js": "^0.4.17",
+    "xml2map": "^1.0.2",
+    "xto": "^1.1.7"
+  }
+}
