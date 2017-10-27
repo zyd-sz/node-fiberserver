@@ -13,7 +13,6 @@ var config = require('./func/config.js');//引用config目录内的config.js文�
 var redis = require("redis");
 var cipher = require('./func/cipher.js');
 var logs = require('./func/logs.js');
-var moment = require("moment");
 var version ='2.0.2';
 
 console.log('version:'+version);
@@ -71,7 +70,6 @@ if(config.get('app').redis.使用 == '是'){
 
 
 }else{
-
 	app.use(session({
 		resave:true,
 		secret: uuid.v4(), //secret的值建议使用随机字符串
@@ -130,7 +128,7 @@ app.post('/api.post',function(req,res){
 	req.on('end', function(){
 		try{
 			console.log('-----------------接收参数-----------------');
-			console.log(body);
+			console.log(moment().format('YYYY-MM-DD HH:mm:ss')+body);
 			console.log('-----------------接收参数-----------------');
 			body = querystring.parse(body);
 			//调用开始时间毫秒数
