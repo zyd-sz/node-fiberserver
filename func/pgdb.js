@@ -2,9 +2,9 @@
 创建时间：2016-09-23
 创建人：吕扶美
 
-更新时间
-更新内容：
-更新人：
+更新时间: 2017-10-30
+更新内容:增加了query方法带参数功能
+更新人:吕扶美
 
 */
 var Fiber = require('fibers');
@@ -71,33 +71,39 @@ pgdb.close = function(client){
 	pgdb.pool.release(client);
 }
 
-pgdb.query = function(client,sql){
+pgdb.query = function(client,sql,data){
+	var err = 0;
 	var result = 0;
 	var fiber = Fiber.current;
-	client.query(sql,function(err,resultdata){
-		// console.log(err);
-		// console.log(resultdata);
-		if(err){
-			result = null;
-			console.log(':'+sql+'执行错误:'+err.stack);
-			logs.write('sql','错误语句:'+sql+'错误信息:'+err.stack);
-			fiber.run();
-		}else{
-			if(resultdata.command == 'SELECT'){
-				result = resultdata.rows;
-			}else if(resultdata.command == 'INSERT'){
-				result = resultdata.rowCount;
-			}else if(resultdata.command == 'DELETE'){
-				result = resultdata.rowCount;
-			}else if(resultdata.command == 'UPDATE'){
-				result = resultdata.rowCount;
-			}
-			fiber.run();
-			
-		}
+
+	client.query(sql,data,function(sqlerr,resultdata){
+		err = sqlerr;
+		result = resultdata;
+		fiber.run();
 	});
 
+
 	Fiber.yield();
+
+	if(err){
+		result = null;
+		console.log(':'+sql+'执行错误:'+err.stack);
+		logs.write('sql','错误语句:'+sql+'错误信息:'+err.stack);
+		return result;
+	}
+
+	if(result.command == 'SELECT'){
+		result = result.rows;
+	}else if(result.command == 'INSERT'){
+		result = result.rowCount;
+	}else if(result.command == 'DELETE'){
+		result = result.rowCount;
+	}else if(result.command == 'UPDATE'){
+		result = result.rowCount;
+	}else if(result.command == 'BEGIN' || result.command == 'COMMIT' || result.command == 'ROLLBACK'){
+		result = true;
+	}
+	
 
 	return result;
 }
