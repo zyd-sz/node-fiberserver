@@ -2,9 +2,9 @@
 创建时间：2016-09-23
 创建人：吕扶美
 
-更新时间
-更新内容：
-更新人：
+更新时间:2017-10-30
+更新内容：可发国际短信
+更新人：吕扶美
 
 */
 var crypto = require('crypto');
@@ -14,47 +14,36 @@ var Fiber = require('fibers');
 
 var txsms = {};
 
-/**
-[发送腾讯语音验证码
 
-参数说明:mobile=手机号码,message=验证码内容 msg = 回复信息
-
-回传参数:状态,信息
-
-
-
-调用方法：
-
-txsms.yy_yzm(mobile,message,function(msg){
-
-	console.log(msg);
-
-});
+//appid和appkey实例化
+txsms.init = function(appid,appkey){
+	var sms = new Object();
+	sms.appid = appid;
+	sms.appkey = appkey;
+	sms.sendvoice = sendvoice;
+	sms.sendsms = sendsms;
+	return sms;
+}
 
 
-*/
-txsms.yy_yzm = function(mobile,message){
+module.exports = txsms;
+
+
+///发送语音验证码
+function sendvoice(nationcode,mobile,message){
 
 	var fiber = Fiber.current;
 
 	var result = {};
 
-	var conf = config.get('txsms');
-
-	if(conf == null){
-		result.状态 = '失败';
-		result.回复信息 = '读取配置文件失败';
-		return result
-	}
-
-	var sdkappid = conf.sdkappid;
-	var appkey = conf.appkey;
+	var sdkappid = this.appid;
+	var appkey = this.appkey;
 
 	var random = Math.random().toString().substring(2,12) * 1;
 
 	var tel = {};
 
-	tel.nationcode = '86';
+	tel.nationcode = nationcode;
 	tel.phone = mobile;
 
 	var data = {};
@@ -89,15 +78,21 @@ txsms.yy_yzm = function(mobile,message){
 	    res.on('data', function(data) {
 	        body += data;
 	    }).on('end', function() {
-			result.状态 = '成功';
-			result.回复信息 = JSON.parse(body);
+
+			try{
+				result = JSON.parse(body);
+			}catch(e){
+				result.result = 2001;
+				result.errmsg = '服务器返回数据解析失败';
+			}
+			
 			fiber.run();
 	    });
 	});
 
 	req.on('error', function (e) {  
-		result.状态 = '失败';
-		result.回复信息 = '发送语音验证码失败';
+		result.result = 2002;
+		result.回复信息 = '请求失败';
 		fiber.run();
 	});
 
@@ -110,47 +105,24 @@ txsms.yy_yzm = function(mobile,message){
 
 }
 
-/**
-]发送腾讯语音验证码*/
-
-
-/**
-[发送腾讯语音验证码
-
-参数说明：mobile=手机号码,message=验证码内容 msg = 回复信息
-
-调用方法：
-
-txsms.sms(mobile,message,function(msg){
-
-	console.log(msg);
-
-});
-
-
-*/
-txsms.sendsms = function(mobile,message,callback){
+////发送本短信
+function sendsms(nationcode,mobile,message){
 
 	var fiber = Fiber.current;
 
 	var result = {};
 
-	var conf = config.get('txsms');
-
-	if(conf == null){
-		result.状态 = '失败';
-		result.回复信息 = '读取配置文件失败';
-		return result
-	}
-	var sdkappid = conf.sdkappid;
-	var appkey = conf.appkey;
+	var sdkappid = this.appid;
+	var appkey = this.appkey;
 
 
 	var random = Math.random().toString().substring(2,12) * 1;
 
 	var tel = {};
 
-	tel.nationcode = '86';
+	//tel.nationcode = '86';	//中国
+	//tel.nationcode = '1';	//美国
+	tel.nationcode = nationcode;	
 	tel.phone = mobile;
 
 	var data = {};
@@ -185,15 +157,21 @@ txsms.sendsms = function(mobile,message,callback){
 	    res.on('data', function(data) {
 	        body += data;
 	    }).on('end', function() {
-			result.状态 = '成功';
-			result.回复信息 = JSON.parse(body);
+
+			try{
+				result = JSON.parse(body);
+			}catch(e){
+				result.result = 100000;
+				result.errmsg = '服务器返回数据解析失败';
+			}
+
 			fiber.run();
 	    });
 	});
 
 	req.on('error', function (e) {  
-		result.状态 = '失败';
-		result.回复信息 = '发送短信失败';
+		result.result = 2002;
+		result.回复信息 = '请求失败';
 		fiber.run();
 	});
 
@@ -219,7 +197,3 @@ function md5(str){
 }
 
 
-
-
-
-module.exports = txsms;
