@@ -10,11 +10,15 @@ var config = require('../func/config.js');
 module.exports.run = function(body,db,mo,redis){
 
 	console.log(body);
-
+	 mysql.query(db,"BEGIN");
 	// var d = mysql.query(db,"insert into testTable(id,name) values(?,?)",[14,'yugdddb']);
-		var d = mysql.query(db,"select * from testTable");
-     // var d = mysql.query(db,"delete from testTable where id=?",[1]);
-	 // var d = mysql.query(db,"delete from testTable where id=2");
+	//	var d = pgdb.query(db,"select * from 平_会员表 where id=11");
+      var d = mysql.query(db,"delete from testTable where id=?",[3]);
+	
+
+	    mysql.query(db,"COMMIT");
+	  //  mysql.query(db,"ROLLBACK");
+
 	 var p={};
 	 p =d;
 	return p;
