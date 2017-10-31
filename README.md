@@ -139,22 +139,20 @@ console.log(str3);
 #### 腾讯云短信 (腾讯云支持国内国外发送短信)
 
 ```javascript
-var qcloud = require("../func/qcloud.js");
-var config = require("../func/config.js");
+   var txsms = require('../func/txsms.js');
 
-module.exports.run = function (body, pg, mo) {
+  //appid和appkey
+  var sms = txsms.init(1400042231,'472dfgsedrtgertcc83737');
 
-    var conf = config.get('txsms');
+  //发送文本短信
+  var result = sms.sendsms('86','138********','短信内容');
 
-    if (conf == null) {
-        result.状态 = '失败';
-        result.回复信息 = '读取配置文件失败';
-        return result;
-    }
+  console.log(result);//{ result: '0', errmsg: 'OK',ext: 'some msg', sid: '8:yse1LEwcnP0mkM8mJgo20171030',count: 1,  fee: 2 }
 
-    var result = qcloud.sendsms("xx", "9083677888", "您的手机验证码为1155,请勿向他人泄漏!", "140xxxxxx", "1xxxxxxxxxxxx");
-    return result;
-}
+  //发送语音验证码
+  var result1 = sms.sendvoice('86','138********','3456');
+
+  console.log(result1);//{ result: '0', errmsg: 'OK', ext: 'some msg', callid: 'ad7d7ebe-bd55-11e7-b52a-525400b306ee' }
 
 ```
 
