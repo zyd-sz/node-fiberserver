@@ -12,9 +12,9 @@ module.exports.run = function(body,db,mo,redis){
 	console.log(body);
 
 	// var d = mysql.query(db,"insert into testTable(id,name) values(?,?)",[14,'yugdddb']);
-		//var d = mysql.query(db,"select * from testTable");
-      var d = mysql.query(db,"delete from testTable where id=?",[11]);
-	
+		var d = mysql.query(db,"select * from testTable");
+     // var d = mysql.query(db,"delete from testTable where id=?",[1]);
+	 // var d = mysql.query(db,"delete from testTable where id=2");
 	 var p={};
 	 p =d;
 	return p;

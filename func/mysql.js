@@ -2,9 +2,9 @@
 创建时间：2016-09-23
 创建人：吕扶美
 
-更新时间
-更新内容：
-更新人：
+更新时间 :2017-10-31
+更新内容：添加占位字符模板，返回结果更新
+更新人：yugb
 
 */
 var Fiber = require('fibers');
@@ -67,47 +67,27 @@ mysql.query = function(client,sql,sqlData){
 	var result = {};
 	var fiber = Fiber.current;
 	var sql_err ="";
-	if(sqlData && sqlData.length>0){
-		//占位符入参 mysql ？
-		client.query(sql,sqlData,function(err,data,fields){
-            if(err){
-				 sql_err = err;
-				 result.状态 = '失败';
-				 result.信息 = sql_err.stack;
-			}else{
-				result.状态 = '成功';
-				if(data.affectedRows == undefined){
-					result.信息 = data;
-				}else{
-					result.影响行数 = data.affectedRows;
-				}
-			}
-			
-			fiber.run();
-	    });
-	}else{
-		client.query(sql,function(err,data,fields){
-			if(err){
-				sql_err = err;
-				result.状态 = '失败';
-				result.信息 = sql_err.stack;
-		   }else{
-			    result.状态 = '成功';
-			   if(data.affectedRows == undefined){
-				   result.数据 = data;
-			   }else{
-				   result.影响行数  = data.affectedRows;
-			   }
-		   }
-		   
-			fiber.run();
-	    });
-	}
-
+	var sql_result=0;
+	client.query(sql,sqlData,function(err,data,fields){
+		sql_err = err ;
+		sql_result =data;
+		fiber.run();
+	});
+	
 	Fiber.yield();
+
     if(sql_err){
+		result.状态 = '失败';
+		result.信息 = sql_err.stack;
     	console.log(':'+sql+'执行错误:'+sql_err.stack);
 		logs.write('sql','错误语句:'+sql+'错误信息:'+sql_err.stack);
+	}else{
+		   result.状态 = '成功';
+		   if(sql_result.affectedRows == undefined){
+			   result.信息 = sql_result;
+		   }else{
+			   result.影响行数 = sql_result.affectedRows;
+		   }
 	}
 	return result;
 }
