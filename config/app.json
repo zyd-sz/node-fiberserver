@@ -19,7 +19,7 @@
 		"db":"zyk"
 	},
 	"mysql":{
-		"host":"192.168.0.205",
+		"host":"192.168.1.58",
 		"user":"root",
 		"pass":"zyd123456",
 		"db":"test"
@@ -33,13 +33,21 @@
 		"pass":"any123456"
 	},
 	"redis":{
-		"使用":"是",
+		"使用": "否",
 		"host":"192.168.0.200",
 		"port":6379,
 		"password":"nanmoguanshiyinpusa2017",
 		"sessionDB":0,
 		"web_imDB":1,
 		"web_imChannelList":["message","room"]
+	},
+	"postgresql_two":{
+		"使用":"否",
+		"address":"192.168.0.200",
+		"port":"6677",
+		"db":"zyd",
+		"user":"any",
+		"pass":"any123456"
 	},
 	"sqlite":{
 		"db":"mysql.db"

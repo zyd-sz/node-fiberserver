@@ -1,11 +1,9 @@
 /**pg数据库功能
 创建时间：2016-09-23
 创建人：吕扶美
-
 更新时间: 2017-10-30
 更新内容:增加了query方法带参数功能
 更新人:吕扶美
-
 */
 var Fiber = require('fibers');
 var pg = require('pg');
@@ -75,7 +73,7 @@ pgdb.query = function(client,sql,data){
 	var err = 0;
 	var result = 0;
 	var fiber = Fiber.current;
-
+     
 	client.query(sql,data,function(sqlerr,resultdata){
 		err = sqlerr;
 		result = resultdata;
