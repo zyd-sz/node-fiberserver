@@ -11,19 +11,12 @@ module.exports.run = function(body,db,mo,redis){
 
 	console.log(body);
 
-	// var d = mysql.query(db,"insert into dd(id,name) values(121,'sdfsdf')");
-		var d = mysql.query(db,"select * from dd");
-
-
-		// var d = mysql.query(db,"COMMIT;");
-
-	console.log(d);
-
-
-	var p = {};
-	p._isRander = 'y';
-
-
+	// var d = mysql.query(db,"insert into testTable(id,name) values(?,?)",[14,'yugdddb']);
+		//var d = mysql.query(db,"select * from testTable");
+      var d = mysql.query(db,"delete from testTable where id=?",[11]);
+	
+	 var p={};
+	 p =d;
 	return p;
 
 

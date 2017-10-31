@@ -63,31 +63,52 @@ mysql.close = function(client){
 	mysql.pool.release(client);
 }
 
-mysql.query = function(client,sql){
-	var result = 0;
+mysql.query = function(client,sql,sqlData){
+	var result = {};
 	var fiber = Fiber.current;
-	client.query(sql,function(err,data,fields){
-		// console.log(err);
-		// console.log(data);
-		if(err){
-			result = null;
-			console.log(':'+sql+'执行错误:'+err.stack);
-			logs.write('sql','错误语句:'+sql+'错误信息:'+err.stack);
-			fiber.run();
-		}else{
-
-			if(data.affectedRows == undefined){
-				result = data;
+	var sql_err ="";
+	if(sqlData && sqlData.length>0){
+		//占位符入参 mysql ？
+		client.query(sql,sqlData,function(err,data,fields){
+            if(err){
+				 sql_err = err;
+				 result.状态 = '失败';
+				 result.信息 = sql_err.stack;
 			}else{
-				result = data.affectedRows;
+				result.状态 = '成功';
+				if(data.affectedRows == undefined){
+					result.信息 = data;
+				}else{
+					result.影响行数 = data.affectedRows;
+				}
 			}
-			fiber.run();
 			
-		}
-	});
+			fiber.run();
+	    });
+	}else{
+		client.query(sql,function(err,data,fields){
+			if(err){
+				sql_err = err;
+				result.状态 = '失败';
+				result.信息 = sql_err.stack;
+		   }else{
+			    result.状态 = '成功';
+			   if(data.affectedRows == undefined){
+				   result.数据 = data;
+			   }else{
+				   result.影响行数  = data.affectedRows;
+			   }
+		   }
+		   
+			fiber.run();
+	    });
+	}
 
 	Fiber.yield();
-
+    if(sql_err){
+    	console.log(':'+sql+'执行错误:'+sql_err.stack);
+		logs.write('sql','错误语句:'+sql+'错误信息:'+sql_err.stack);
+	}
 	return result;
 }
 
