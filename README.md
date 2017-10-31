@@ -1,17 +1,17 @@
 # node-fiberserver
-**最近更新**
 
-## 版本说明  2.0.4
-2.修改sql语句入参方式，采用占位符显示拼接sql语句，有效防止sql注入攻击<br/>
+
+## 版本说明  2.0.3
+1.修改sql语句入参方式，采用占位符显示拼接sql语句，有效防止sql注入攻击<br/>
+    1. mysql 使用 ？站位<br/>
+    2. pgsql 使用 $ 站位<br/>
     示例: <br/> var sql = 'select * from 平_会员表  where 账号=$1 and 唯一id=$2';<br/>
            var sqldata=[f.username,f.onlyId];  //与参数必须一一对应<br/>
            var result = pgdb.query(pg,sql,sqldata); //获取结果，和以前一样
 
     注意：若采用老版本sql语句直接拼接，sqldata 为空，或不传。
-
-## 版本说明  2.0.3
-
- 1.func文件夹添加calculator.js 工具，用于精确计算
+<br/>
+ 2.func文件夹添加calculator.js 工具，用于精确计算
  举个栗子：<br/>
       console.log(calc.add(0.01,0.02)); ==>0.03
        console.log(calc.sub(0.01,0.02)); ==>-0.01
