@@ -2,7 +2,8 @@
 
 ## 安装方法
 1.直接下载zip包解压。
-2.使用 git clone https://github.com/zyd-sz/node-fiberserver 命令。
+
+2.使用 `git clone https://github.com/zyd-sz/node-fiberserver `命令。
 
 
 ## 版本说明  2.0.3
