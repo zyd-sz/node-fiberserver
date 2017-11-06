@@ -4,6 +4,7 @@ var pgdb = require('./pgdb.js');
 var mongo = require('./mongo.js');
 var redisdb = require('./redisdb.js');
 var mysql = require('./mysql.js');
+var logs = require('./logs.js');
 
 function db_pools(name,callback){
 	var obj = new Object();
