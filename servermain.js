@@ -39,13 +39,18 @@ process.on('SyntaxError', function (err) {
 
 var app = express();
 
+//session存储时间 30分钟（单位=毫秒）
+var sessionTime = 30 * 60 * 1001;
+
 //redis存储session
 if(config.get('app').redis.使用 == '是'){
+
+
 
 	var RedisStrore = require('connect-redis')(session);
 	var cf = {
 	"cookie" : {
-	   "maxAge" : 360000
+	   "maxAge" : sessionTime
 	},
 	  "sessionStore" : {
 	   "host" : config.get('app').redis.host,
@@ -74,7 +79,7 @@ if(config.get('app').redis.使用 == '是'){
 		resave:true,
 		secret: uuid.v4(), //secret的值建议使用随机字符串
 		saveUninitialized: true,
-		cookie: {maxAge: 360000} // 过期时间（毫秒）
+		cookie: {maxAge: sessionTime} // 过期时间（毫秒）
 	}));
 
 
