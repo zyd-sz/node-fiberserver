@@ -1,6 +1,5 @@
 var fs = require('fs');
 var Fiber = require('fibers');
-var schedule = require('node-schedule');
 var moment = require('moment');
 var config = require('./func/config.js');
 
@@ -8,25 +7,12 @@ var time = {};
 
 config.readfile();
 
-var rule = new schedule.RecurrenceRule();
-var times = [];
-
-for(var i=0; i<60; i++){
-	times.push(i);
-
-}
-
-rule.second = times;
-
-var j = schedule.scheduleJob(rule, function(a){
-
+time.startTime = function(){
 	if(fs.existsSync('./time_run_second/run.json') == false){
 		console.log('定时任务未找到time_run_second/run.json文件，停止运行！');
 		return;
 	}
-
 	var second = moment().second();
-	// console.log(second);
 	var secondfile = searchf_second_file(second+'.json');
 	if(secondfile){
 		var data = fs.readFileSync('./time_run_second/'+second+'.json');
@@ -40,7 +26,7 @@ var j = schedule.scheduleJob(rule, function(a){
 		}
 
 
-		console.log('读取任务列表:'+funcList,second,'.json');
+		console.log('读取任务列表:'+second+'.json'+' : '+funcList);
 
 
 		for(var i = 0 ; i < funcList.length ; i++){
@@ -56,9 +42,6 @@ var j = schedule.scheduleJob(rule, function(a){
 				console.log('未找到任务文件:'+funcList[i]);
 			}
 		}
-
-
-
 
 
 
@@ -93,7 +76,10 @@ var j = schedule.scheduleJob(rule, function(a){
 
 
 
-});
+
+}
+
+
 
 
 
@@ -165,3 +151,15 @@ function searchf_second_file(fileName){
 
 	return false;
 }
+
+
+
+
+setInterval(function(){
+
+	time.startTime();
+	
+},1000);
+
+
+
