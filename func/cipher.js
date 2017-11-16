@@ -149,6 +149,113 @@ cipher.aesdecode = function(data,key){
 }
 
 
+/*AES加密 加密后输出Base64编码*/
+cipher.AESencryptBase64 = function(data,key){
+
+	if(typeof(data) != 'string' || typeof(key) != 'string'){
+		console.error('aes加密的数据和密钥必须是string类型!');
+		return null;
+	}
+
+
+	var newKey = '';
+	var base64data = '';
+
+	/*1.密钥md5处理*/
+	var md5 = crypto.createHash('md5');
+	md5.update(key);
+	newKey = md5.digest('hex');
+
+
+	/*2.原数据base64处理*/
+	try{
+		var buf = new Buffer(data);
+		base64data = buf.toString('base64');
+	}catch(e){
+		return null;
+	}
+
+	/*3.加密操作*/
+	try{
+		//编码设置
+		var clearEncoding = 'utf8';
+		//加密方式
+		var algorithm = 'aes-256-ecb';
+		//向量
+		var iv = "";
+		//加密类型 base64/hex...
+		var cipherEncoding = 'base64';
+		var cipher = crypto.createCipheriv(algorithm, newKey, iv);
+		var cipherChunks = [];
+		cipherChunks.push(cipher.update(base64data, clearEncoding, cipherEncoding));
+		cipherChunks.push(cipher.final(cipherEncoding));
+		return cipherChunks.join('');
+	}catch(e){
+		console.error('aes加密操作失败!');
+		return null;
+	}
+
+
+
+
+}
+
+/*AES Base64编码密文解密*/
+cipher.AESdecryptBase64 = function(data,key){
+
+	if(typeof(data) != 'string' || typeof(key) != 'string'){
+		console.error('aes解密的数据和密钥必须是string类型!');
+		return null;
+	}
+
+	var newKey = '';
+	var base64data = '';
+
+	/*1.密钥md5处理*/
+	var md5 = crypto.createHash('md5');
+	md5.update(key);
+	newKey = md5.digest('hex');
+
+	/*2.解密操作*/
+
+	try{
+		//编码设置
+		var clearEncoding = 'utf8';
+		//加密方式
+		var algorithm = 'aes-256-ecb';
+		//向量
+		var iv = "";
+		//加密类型 base64/hex...
+		var cipherEncoding = 'base64';
+;
+		var cipherChunks = [data];
+		var decipher = crypto.createDecipheriv(algorithm, newKey, iv);
+		var plainChunks = [];
+		for (var i = 0;i < cipherChunks.length;i++) {
+			plainChunks.push(decipher.update(cipherChunks[i], cipherEncoding, clearEncoding));
+		}
+		plainChunks.push(decipher.final(clearEncoding));
+
+		base64data = plainChunks.join('');
+	}catch(e){
+		console.error('aes解密操作失败!');
+		return null;
+	}
+
+	/*2.base64解码操作*/
+	try{
+		var base64buf = new Buffer(base64data, 'base64')
+		var enString = base64buf.toString();
+		return enString;
+	}catch(e){
+		console.error('base64解码失败!');
+		return null;
+	}
+
+
+
+}
+
 
 
 module.exports = cipher;
