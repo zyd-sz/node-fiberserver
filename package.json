@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ali-oss": "^4.8.0",
+    "apn": "^2.1.5",
     "async": "^2.1.4",
     "connect-redis": "^3.2.0",
     "ejs": "^2.5.5",
