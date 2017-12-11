@@ -6,6 +6,10 @@
 更新内容:增加了query方法带参数功能
 更新人:吕扶美
 
+更新时间：2017-12-11
+更新内容：增加returning方法输出参数
+更新人:黄杰和
+
 */
 var Fiber = require('fibers');
 var pg = require('pg');
@@ -99,7 +103,9 @@ pgdb.query = function(client,sql,data){
 	}else if(result.command == 'DELETE'){
 		result = result.rowCount;
 	}else if(result.command == 'UPDATE'){
-		result = result.rowCount;
+		if(sql.indexOf("returning")>=0 || sql.indexOf("RETURNING")>=0){}
+		else
+			result = result.rowCount;
 	}else if(result.command == 'BEGIN' || result.command == 'COMMIT' || result.command == 'ROLLBACK'){
 		result = true;
 	}
