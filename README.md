@@ -9,7 +9,8 @@
 ## 版本说明  2.0.3
 **最近更新**
 <br/>
-1.修改sql语句入参方式，采用占位符显示拼接sql语句，有效防止sql注入攻击<br/>
+1.pgdb.js模块增加returning 支持。
+2.修改sql语句入参方式，采用占位符显示拼接sql语句，有效防止sql注入攻击<br/>
     1. mysql 使用 ？站位<br/>
     2. pgsql 使用 $ 站位<br/>
     示例: <br/> var sql = 'select * from xxx表  where 账号=$1 and 唯一id=$2';<br/>
@@ -18,7 +19,7 @@
 
     注意：若采用老版本sql语句直接拼接，sqldata 为空，或不传。
 <br/>
- 2.func文件夹添加calculator.js 工具，用于精确计算
+ 3.func文件夹添加calculator.js 工具，用于精确计算
  举个栗子：<br/>
       console.log(calc.add(0.01,0.02)); ==>0.03<br/>
        console.log(calc.sub(0.01,0.02)); ==>-0.01<br/>
