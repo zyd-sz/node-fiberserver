@@ -1,147 +1,312 @@
+/**
+ * –¬‘ˆ»À:÷”±¶…≠
+ * –¬‘ˆ ±º‰:2017-12-4 11:49:00
+ * –¬‘ˆƒ⁄»›:–¬‘ˆ∂‘”⁄ÃÏº∂ ±º∂∑÷º∂µƒ ±º‰Ω¯––∆•≈‰µƒ∫Ø ˝
+ */
+
 var moment = require("moment");
+var config = require("./config.js");
 
 var common = {};
 
-/* [ÂéªÈô§Êï∞ÊçÆ‰∏≠Âê´ÊúânullÁöÑ
-Ë∞ÉÁî®ÊñπÊ≥ï:
-result:jsonÁ±ªÂûãÊàñËÄÖÊòØstringÁ±ªÂûã
+/* [»•≥˝ ˝æ›÷–∫¨”–nullµƒ
+µ˜”√∑Ω∑®:
+result:json¿‡–ÕªÚ’ﬂ «string¿‡–Õ
  */
-common.removenull = function (result){
-    var reg=new RegExp(":null","g");
+common.removenull = function (result) {
+    var reg = new RegExp(":null", "g");
     var notnull;
-    if(typeof(result) == "string"){
-        try{
-           notnull = result.replace(reg,':""');
-        }catch(e){
-           console.error(e);
-           return;
-        } 	 
-         return notnull;
+    if (typeof (result) == "string") {
+        try {
+            notnull = result.replace(reg, ':""');
+        } catch (e) {
+            console.error(e);
+            return;
+        }
+        return notnull;
     }
-    else if(typeof(result) == "object"){
-        try{
-           result = JSON.stringify(result);
-           result = result.replace(reg,':""');
-           notnull = JSON.parse(result);
-        }catch(e){
-           console.error(e);
-           return null;
-        } 	 
-       
-       return notnull;
+    else if (typeof (result) == "object") {
+        try {
+            result = JSON.stringify(result);
+            result = result.replace(reg, ':""');
+            notnull = JSON.parse(result);
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+
+        return notnull;
     }
-    else{
+    else {
         return notnull;
     }
 }
 
 
-/* [ÂèñÂΩìÂâçÊó∂Èó¥ÁöÑÂá†Â§©ÂêéÊàñÂá†ÊúàÂêé
-Ë∞ÉÁî®ÊñπÊ≥ï:
-ee:Êó∂Èó¥[2015-02-01 00:00:00]
-type: dayÊòØÂá†Â§©Âêé,monthÊòØÂá†ÊúàÂêé
-num:Êúà‰ªΩ,Ë¥üÂè∑‰∏∫‰∏äÂá†Êúà,NumberÁ±ªÂûã
+/* [»°µ±«∞ ±º‰µƒº∏ÃÏ∫ÛªÚº∏‘¬∫Û
+µ˜”√∑Ω∑®:
+ee: ±º‰[2015-02-01 00:00:00]
+type: day «º∏ÃÏ∫Û,month «º∏‘¬∫Û
+num:‘¬∑›,∏∫∫≈Œ™…œº∏‘¬,Number¿‡–Õ
 */
-common.afterDM = function(ee,type,num){
-		var r='';
-        var now = "";
-		if(ee==null){
-          now = new Date();//ÊåáÂÆöÊó•Êúü
-        }
-		else{
-          now = new Date(ee);
-        }
+common.afterDM = function (ee, type, num) {
+    var r = '';
+    var now = "";
+    if (ee == null) {
+        now = new Date();//÷∏∂®»’∆⁄
+    }
+    else {
+        now = new Date(ee);
+    }
 
-        if(type == ""){
-            return null;
-        }
-        else if(type == "day"){
-            var lastMonth = new Date(now.getFullYear(),num+now.getMonth(),now.getDate());
-            var ty='YYYY-MM-DD HH:mm:ss';
-            var le=ee.length;
-            ty=ty.substr(0,le);
-            r = moment(lastMonth).format(ty); 
-            return r;
-        }
-        else if(type == "month"){
-            var lastMonth = new Date((now/1000+(num*24*60*60))*1000);
-            var ty='YYYY-MM-DD HH:mm:ss';
-            r = moment(lastMonth).format(ty);
-            return r;
-        } 
-		else{
-            return null;
-        }
-		
-		
-	}
+    if (type == "") {
+        return null;
+    }
+    else if (type == "day") {
+        var lastMonth = new Date(now.getFullYear(), num + now.getMonth(), now.getDate());
+        var ty = 'YYYY-MM-DD HH:mm:ss';
+        var le = ee.length;
+        ty = ty.substr(0, le);
+        r = moment(lastMonth).format(ty);
+        return r;
+    }
+    else if (type == "month") {
+        var lastMonth = new Date((now / 1000 + (num * 24 * 60 * 60)) * 1000);
+        var ty = 'YYYY-MM-DD HH:mm:ss';
+        r = moment(lastMonth).format(ty);
+        return r;
+    }
+    else {
+        return null;
+    }
 
-/*]Ëé∑ÂèñËåÉÂõ¥ÂÜÖÁöÑÈöèÊú∫Êï∞ 
-Ë∞ÉÁî®ÊñπÊ≥ï:
-min:ÊúÄÂ∞èÊï∞
-max:ÊúÄÂ§ßÊï∞
-*/
-common.sjs =function (min,max){
-var num=Math.floor(min+Math.random()*(max-min));
-return String(num);
+
 }
-/*]Ëé∑ÂèñËåÉÂõ¥ÂÜÖÁöÑÈöèÊú∫Êï∞ */
+
+/*]ªÒ»°∑∂Œßƒ⁄µƒÀÊª˙ ˝ 
+µ˜”√∑Ω∑®:
+min:◊Ó–° ˝
+max:◊Ó¥Û ˝
+*/
+common.sjs = function (min, max) {
+    var num = Math.floor(min + Math.random() * (max - min));
+    return String(num);
+}
+/*]ªÒ»°∑∂Œßƒ⁄µƒÀÊª˙ ˝ */
 
 
 
-/*ÂèñÂ≠óÁ¨¶‰∏≤ÊãºÈü≥È¶ñÂ≠óÊØç(Â§ßÂÜô)*/
+/*»°◊÷∑˚¥Æ∆¥“Ù ◊◊÷ƒ∏(¥Û–¥)*/
 
 
-/*Êà™Âèñ‰∏≠Èó¥Â≠óÁ¨¶‰∏≤
+/*Ωÿ»°÷–º‰◊÷∑˚¥Æ
 	var str = "hello world"
 	var newStr = this.getsub(str,"h","o");
 	console.log(newStr);  //ell
 */
-common.getsub  = function (str,start,end){
-	var s = str.indexOf(start);
-	var e = str.indexOf(end);
-	if(s == -1){
-		return null
-	}else{
-		if(e == -1){
-			e = str.length;
-		}
-		return str.substring(s+start.length,e);
-	}
+common.getsub = function (str, start, end) {
+    var s = str.indexOf(start);
+    var e = str.indexOf(end);
+    if (s == -1) {
+        return null
+    } else {
+        if (e == -1) {
+            e = str.length;
+        }
+        return str.substring(s + start.length, e);
+    }
 }
 
 
-/*[Âèñ‰∏§Êï∞Áõ∏Â∑ÆÁßíÊï∞ */
-common.timeSecond = function(time2,time1){
-  var date1=new Date(time1);
-  var date2=new Date(time2);
-  var time=(date2-date1)/1000;
-  return time;
+/*[»°¡Ω ˝œ‡≤Ó√Î ˝ */
+common.timeSecond = function (time2, time1) {
+    var date1 = new Date(time1);
+    var date2 = new Date(time2);
+    var time = (date2 - date1) / 1000;
+    return time;
 }
-/*]Âèñ‰∏§Êï∞Áõ∏Â∑ÆÁßíÊï∞ */
+
+/*]»°¡Ω ˝œ‡≤Ó√Î ˝ */
 
 
 /**
- * ÂèÇÊï∞Âà§Á©∫
+ * ≤Œ ˝≈–ø’
  * @param obj
  * @param data
  * @returns {*}
- * ‰ΩøÁî®ÊñπÊ≥ïÔºöÂú®‰∏öÂä°‰ª£Á†ÅÊúÄÂâçÈù¢Âä† ‚Üì
+ *  π”√∑Ω∑®£∫‘⁄“µŒÒ¥˙¬Î◊Ó«∞√Êº” °˝
  *
-   const {Â≠óÊÆµA, Â≠óÊÆµB, Â≠óÊÆµC, Â≠óÊÆµD, Â≠óÊÆµE} = f;
-   const obj = {Â≠óÊÆµA, Â≠óÊÆµB, Â≠óÊÆµC, Â≠óÊÆµD, Â≠óÊÆµE};
+   const {◊÷∂ŒA, ◊÷∂ŒB, ◊÷∂ŒC, ◊÷∂ŒD, ◊÷∂ŒE} = f;
+   const obj = {◊÷∂ŒA, ◊÷∂ŒB, ◊÷∂ŒC, ◊÷∂ŒD, ◊÷∂ŒE};
    data = judgeNull(obj, data);
-   if (data.Áä∂ÊÄÅ != 'ÊàêÂäü') return data;
+   if (data.◊¥Ã¨ != '≥…π¶') return data;
  */
 common.judgeNull = (obj, data) => {
     for (let item in obj) {
         if (!obj[item]) {
-            data.Áä∂ÊÄÅ = `${item}‰∏çËÉΩ‰∏∫Á©∫`;
+            data.◊¥Ã¨ = `${item}≤ªƒ‹Œ™ø’`;
             break;
         }
     }
     return data;
 };
 
+/**
+ * ∂‘”⁄ÃÏº∂ ±º∂∑÷º∂µƒ ±º‰Ω¯––∆•≈‰µƒ∫Ø ˝
+ * @param {*} jsonFile jsonŒƒº˛√˚ ¬∑æ∂“™∑≈‘⁄configŒƒº˛º–œ¬
+ * @param {*} func  jsonŒƒº˛ƒ⁄∂‘”¶µƒ≈‰÷√Œƒº˛
+ * 
+ * ∏Ò Ω»Áœ¬∏Ò Ω≤≈ƒ‹’˝≥£∂¡»°
+{
+    "a":{
+        "day":[],
+        "hour":[],
+        "minute":[30,60]   //¥˙±Ì÷ªƒ‹‘⁄√ø30∑÷ ∫Õ √ø60∑÷÷¥––
+    }
+}
+
+÷ß≥÷ÃÏ ±∑÷¥Ó≈‰ π”√
+µ˜”√:
+if(!common.dealTime("time","p_pay_commit")){
+        console.log("√ª”–µΩ ±∫Ú,ªπ≤ªƒ‹‘À––O(°…_°…)O");
+        return;
+}
+◊¢:¥À∫Ø ˝÷ª’Î∂‘∂® ±»ŒŒÒ∑‚◊∞µƒ∫Ø ˝
+ */
+common.dealTime = (jsonFile, func) => {
+    var data = false; //≥ı ºŒ™false;
+    var day;
+    var hour;
+    var minute;
+    var nowtime = moment().format('YYYY-MM-DD HH:mm:ss');
+    try {
+        var FILE = eval('config.get(jsonFile).'+func);
+    } catch (e) {
+        console.warn('∂¡»°≤ªµΩ∂‘”¶µƒ' + func + '≈‰÷√≤Œ ˝');
+        data = false;
+        return data;
+    }
+
+    try {
+        day = FILE.day;
+        hour = FILE.hour;
+        minute = FILE.minute;
+    } catch (e) {
+        console.warn('∂¡»°' + func + '≈‰÷√“Ï≥£,«Î≤Èø¥≈‰÷√ «∑Ò’˝»∑');
+        data = false;
+        return data;
+    }
+
+    if (!day) {
+        console.warn('∂¡»°' + func + '≈‰÷√day“Ï≥£,«Î≤Èø¥≈‰÷√ «∑Ò’˝»∑');
+        data = false;
+        return data;
+    }
+
+    if (!hour) {
+        console.warn('∂¡»°' + func + '≈‰÷√hour“Ï≥£,«Î≤Èø¥≈‰÷√ «∑Ò’˝»∑');
+        data = false;
+        return data;
+    }
+
+    if (!minute) {
+        console.warn('∂¡»°' + func + '≈‰÷√minute“Ï≥£,«Î≤Èø¥≈‰÷√ «∑Ò’˝»∑');
+        data = false;
+        return data;
+    }
+
+    if(hour.length == 0 && day.length == 0 && minute.length == 0){  //≤ª…Ë÷√»Œ∫Œ ±º‰‘Ú∞¥’’√Î ˝¿¥÷¥––
+        data = true;
+        return data;
+    }
+
+    if(day.length == 0 && minute.length == 0){  //…Ë÷√ÃÏ ±º∂‘Ú∞¥’’ ±º∂¿¥÷¥––
+        if(hour.length > 0){
+            for (let value of minute) {
+                if (value == Number(moment().format('mm'))) {
+                    data = true;
+                    return data;
+                }
+            }
+            data = false;
+            return data;
+        }
+    }
+
+    if(day.length == 0 && hour.length == 0){  //…Ë÷√∑÷º∂‘Ú∞¥’’ ±º∂¿¥÷¥––
+        if(minute.length > 0){
+            for (let value of minute) {
+                if (value == Number(moment().format('mm'))) {
+                    data = true;
+                    return data;
+                }
+            }
+            data = false;
+            return data;
+        }
+    }
+
+    if(day.length == 0){   //…Ë÷√ ±º∂”Î∑÷º∂‘Ú∞¥’’ ±∑÷º∂¿¥÷¥––
+        if(hour.length > 0){
+            for (let value of hour) {
+                if (value == Number(moment().format('HH'))) {
+                    if(minute.length > 0){
+                        for (let value of minute) {
+                            if (value == Number(moment().format('mm'))) {
+                                data = true;
+                                return data;
+                            }
+                        }
+                        data = false;
+                        return data;
+                    }else{
+                        data = true;
+                        return data;    //…Ë÷√ ±º∂‘Ú∞¥’’ ±º∂¿¥÷¥––
+                    }
+                }
+            }
+            data = false;
+            return data;
+        }
+    }
+
+    if (day.length > 0) {  
+        for (let value of day) {
+            if (value == Number(moment().format('DD'))) {
+                if(hour.length > 0){
+                    for (let value of hour) {
+                        if (value == Number(moment().format('HH'))) {
+                            if(minute.length > 0){
+                                for (let value of minute) {
+                                    if (value == Number(moment().format('mm'))) {
+                                        data = true;
+                                        return data;  //…Ë÷√ÃÏº∂°¢ ±º∂°¢∑÷º∂‘Ú∞¥’’ÃÏ ±∑÷º∂¿¥÷¥––
+                                    }
+                                }
+                                data = false;
+                                return data;
+                            }
+                            else{
+                                data = true;
+                                return data;  //…Ë÷√ÃÏ ±º∂‘Ú∞¥’’ÃÏ ±º∂¿¥÷¥––
+                            }
+                        }
+                    }
+                    data = false;
+                    return data;
+                }else{
+                    data = true;
+                    return data;  //…Ë÷√ÃÏº∂‘Ú∞¥’’ÃÏº∂¿¥÷¥––
+                }
+            }
+        }
+        data = false;
+        return data;
+    }
+
+
+
+
+}
 
 module.exports = common;
