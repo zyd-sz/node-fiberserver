@@ -9,7 +9,7 @@
 ## 版本说明  2.0.3
 **最近更新**
 <br/>
-1.pgdb.js模块增加returning 支持。
+1.pgdb.js模块增加returning 支持。<br/>
 2.修改sql语句入参方式，采用占位符显示拼接sql语句，有效防止sql注入攻击<br/>
     1. mysql 使用 ？站位<br/>
     2. pgsql 使用 $ 站位<br/>
