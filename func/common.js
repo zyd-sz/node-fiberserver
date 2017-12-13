@@ -1,7 +1,7 @@
-/**
- * ĞÂÔöÈË:ÖÓ±¦É­
- * ĞÂÔöÊ±¼ä:2017-12-4 11:49:00
- * ĞÂÔöÄÚÈİ:ĞÂÔö¶ÔÓÚÌì¼¶Ê±¼¶·Ö¼¶µÄÊ±¼ä½øĞĞÆ¥ÅäµÄº¯Êı
+ï»¿/**
+ * æ–°å¢äºº:é’Ÿå®æ£®
+ * æ–°å¢æ—¶é—´:2017-12-4 11:49:00
+ * æ–°å¢å†…å®¹:æ–°å¢å¯¹äºå¤©çº§æ—¶çº§åˆ†çº§çš„æ—¶é—´è¿›è¡ŒåŒ¹é…çš„å‡½æ•°
  */
 
 var moment = require("moment");
@@ -9,9 +9,9 @@ var config = require("./config.js");
 
 var common = {};
 
-/* [È¥³ıÊı¾İÖĞº¬ÓĞnullµÄ
-µ÷ÓÃ·½·¨:
-result:jsonÀàĞÍ»òÕßÊÇstringÀàĞÍ
+/* [å»é™¤æ•°æ®ä¸­å«æœ‰nullçš„
+è°ƒç”¨æ–¹æ³•:
+result:jsonç±»å‹æˆ–è€…æ˜¯stringç±»å‹
  */
 common.removenull = function (result) {
     var reg = new RegExp(":null", "g");
@@ -43,17 +43,17 @@ common.removenull = function (result) {
 }
 
 
-/* [È¡µ±Ç°Ê±¼äµÄ¼¸Ììºó»ò¼¸ÔÂºó
-µ÷ÓÃ·½·¨:
-ee:Ê±¼ä[2015-02-01 00:00:00]
-type: dayÊÇ¼¸Ììºó,monthÊÇ¼¸ÔÂºó
-num:ÔÂ·İ,¸ººÅÎªÉÏ¼¸ÔÂ,NumberÀàĞÍ
+/* [å–å½“å‰æ—¶é—´çš„å‡ å¤©åæˆ–å‡ æœˆå
+è°ƒç”¨æ–¹æ³•:
+ee:æ—¶é—´[2015-02-01 00:00:00]
+type: dayæ˜¯å‡ å¤©å,monthæ˜¯å‡ æœˆå
+num:æœˆä»½,è´Ÿå·ä¸ºä¸Šå‡ æœˆ,Numberç±»å‹
 */
 common.afterDM = function (ee, type, num) {
     var r = '';
     var now = "";
     if (ee == null) {
-        now = new Date();//Ö¸¶¨ÈÕÆÚ
+        now = new Date();//æŒ‡å®šæ—¥æœŸ
     }
     else {
         now = new Date(ee);
@@ -83,23 +83,23 @@ common.afterDM = function (ee, type, num) {
 
 }
 
-/*]»ñÈ¡·¶Î§ÄÚµÄËæ»úÊı 
-µ÷ÓÃ·½·¨:
-min:×îĞ¡Êı
-max:×î´óÊı
+/*]è·å–èŒƒå›´å†…çš„éšæœºæ•° 
+è°ƒç”¨æ–¹æ³•:
+min:æœ€å°æ•°
+max:æœ€å¤§æ•°
 */
 common.sjs = function (min, max) {
     var num = Math.floor(min + Math.random() * (max - min));
     return String(num);
 }
-/*]»ñÈ¡·¶Î§ÄÚµÄËæ»úÊı */
+/*]è·å–èŒƒå›´å†…çš„éšæœºæ•° */
 
 
 
-/*È¡×Ö·û´®Æ´ÒôÊ××ÖÄ¸(´óĞ´)*/
+/*å–å­—ç¬¦ä¸²æ‹¼éŸ³é¦–å­—æ¯(å¤§å†™)*/
 
 
-/*½ØÈ¡ÖĞ¼ä×Ö·û´®
+/*æˆªå–ä¸­é—´å­—ç¬¦ä¸²
 	var str = "hello world"
 	var newStr = this.getsub(str,"h","o");
 	console.log(newStr);  //ell
@@ -118,7 +118,7 @@ common.getsub = function (str, start, end) {
 }
 
 
-/*[È¡Á½ÊıÏà²îÃëÊı */
+/*[å–ä¸¤æ•°ç›¸å·®ç§’æ•° */
 common.timeSecond = function (time2, time1) {
     var date1 = new Date(time1);
     var date2 = new Date(time2);
@@ -126,25 +126,25 @@ common.timeSecond = function (time2, time1) {
     return time;
 }
 
-/*]È¡Á½ÊıÏà²îÃëÊı */
+/*]å–ä¸¤æ•°ç›¸å·®ç§’æ•° */
 
 
 /**
- * ²ÎÊıÅĞ¿Õ
+ * å‚æ•°åˆ¤ç©º
  * @param obj
  * @param data
  * @returns {*}
- * Ê¹ÓÃ·½·¨£ºÔÚÒµÎñ´úÂë×îÇ°Ãæ¼Ó ¡ı
+ * ä½¿ç”¨æ–¹æ³•ï¼šåœ¨ä¸šåŠ¡ä»£ç æœ€å‰é¢åŠ  â†“
  *
-   const {×Ö¶ÎA, ×Ö¶ÎB, ×Ö¶ÎC, ×Ö¶ÎD, ×Ö¶ÎE} = f;
-   const obj = {×Ö¶ÎA, ×Ö¶ÎB, ×Ö¶ÎC, ×Ö¶ÎD, ×Ö¶ÎE};
+   const {å­—æ®µA, å­—æ®µB, å­—æ®µC, å­—æ®µD, å­—æ®µE} = f;
+   const obj = {å­—æ®µA, å­—æ®µB, å­—æ®µC, å­—æ®µD, å­—æ®µE};
    data = judgeNull(obj, data);
-   if (data.×´Ì¬ != '³É¹¦') return data;
+   if (data.çŠ¶æ€ != 'æˆåŠŸ') return data;
  */
 common.judgeNull = (obj, data) => {
     for (let item in obj) {
         if (!obj[item]) {
-            data.×´Ì¬ = `${item}²»ÄÜÎª¿Õ`;
+            data.çŠ¶æ€ = `${item}ä¸èƒ½ä¸ºç©º`;
             break;
         }
     }
@@ -152,29 +152,28 @@ common.judgeNull = (obj, data) => {
 };
 
 /**
- * ¶ÔÓÚÌì¼¶Ê±¼¶·Ö¼¶µÄÊ±¼ä½øĞĞÆ¥ÅäµÄº¯Êı
- * @param {*} jsonFile jsonÎÄ¼şÃû Â·¾¶Òª·ÅÔÚconfigÎÄ¼ş¼ĞÏÂ
- * @param {*} func  jsonÎÄ¼şÄÚ¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
+ * å¯¹äºå¤©çº§æ—¶çº§åˆ†çº§çš„æ—¶é—´è¿›è¡ŒåŒ¹é…çš„å‡½æ•°
+ * @param {*} jsonFile jsonæ–‡ä»¶å è·¯å¾„è¦æ”¾åœ¨configæ–‡ä»¶å¤¹ä¸‹
+ * @param {*} func  jsonæ–‡ä»¶å†…å¯¹åº”çš„é…ç½®æ–‡ä»¶
  * 
- * ¸ñÊ½ÈçÏÂ¸ñÊ½²ÅÄÜÕı³£¶ÁÈ¡
+ * æ ¼å¼å¦‚ä¸‹æ ¼å¼æ‰èƒ½æ­£å¸¸è¯»å–
 {
     "a":{
         "day":[],
         "hour":[],
-        "minute":[30,60]   //´ú±íÖ»ÄÜÔÚÃ¿30·Ö ºÍ Ã¿60·ÖÖ´ĞĞ
+        "minute":[30,60]   //ä»£è¡¨åªèƒ½åœ¨æ¯30åˆ† å’Œ æ¯60åˆ†æ‰§è¡Œ
     }
 }
-
-Ö§³ÖÌìÊ±·Ö´îÅäÊ¹ÓÃ
-µ÷ÓÃ:
+æ”¯æŒå¤©æ—¶åˆ†æ­é…ä½¿ç”¨
+è°ƒç”¨:
 if(!common.dealTime("time","p_pay_commit")){
-        console.log("Ã»ÓĞµ½Ê±ºò,»¹²»ÄÜÔËĞĞO(¡É_¡É)O");
+        console.log("æ²¡æœ‰åˆ°æ—¶å€™,è¿˜ä¸èƒ½è¿è¡ŒO(âˆ©_âˆ©)O");
         return;
 }
-×¢:´Ëº¯ÊıÖ»Õë¶Ô¶¨Ê±ÈÎÎñ·â×°µÄº¯Êı
+æ³¨:æ­¤å‡½æ•°åªé’ˆå¯¹å®šæ—¶ä»»åŠ¡å°è£…çš„å‡½æ•°
  */
 common.dealTime = (jsonFile, func) => {
-    var data = false; //³õÊ¼Îªfalse;
+    var data = false; //åˆå§‹ä¸ºfalse;
     var day;
     var hour;
     var minute;
@@ -182,7 +181,7 @@ common.dealTime = (jsonFile, func) => {
     try {
         var FILE = eval('config.get(jsonFile).'+func);
     } catch (e) {
-        console.warn('¶ÁÈ¡²»µ½¶ÔÓ¦µÄ' + func + 'ÅäÖÃ²ÎÊı');
+        console.warn('è¯»å–ä¸åˆ°å¯¹åº”çš„' + func + 'é…ç½®å‚æ•°');
         data = false;
         return data;
     }
@@ -192,35 +191,35 @@ common.dealTime = (jsonFile, func) => {
         hour = FILE.hour;
         minute = FILE.minute;
     } catch (e) {
-        console.warn('¶ÁÈ¡' + func + 'ÅäÖÃÒì³£,Çë²é¿´ÅäÖÃÊÇ·ñÕıÈ·');
+        console.warn('è¯»å–' + func + 'é…ç½®å¼‚å¸¸,è¯·æŸ¥çœ‹é…ç½®æ˜¯å¦æ­£ç¡®');
         data = false;
         return data;
     }
 
     if (!day) {
-        console.warn('¶ÁÈ¡' + func + 'ÅäÖÃdayÒì³£,Çë²é¿´ÅäÖÃÊÇ·ñÕıÈ·');
+        console.warn('è¯»å–' + func + 'é…ç½®dayå¼‚å¸¸,è¯·æŸ¥çœ‹é…ç½®æ˜¯å¦æ­£ç¡®');
         data = false;
         return data;
     }
 
     if (!hour) {
-        console.warn('¶ÁÈ¡' + func + 'ÅäÖÃhourÒì³£,Çë²é¿´ÅäÖÃÊÇ·ñÕıÈ·');
+        console.warn('è¯»å–' + func + 'é…ç½®hourå¼‚å¸¸,è¯·æŸ¥çœ‹é…ç½®æ˜¯å¦æ­£ç¡®');
         data = false;
         return data;
     }
 
     if (!minute) {
-        console.warn('¶ÁÈ¡' + func + 'ÅäÖÃminuteÒì³£,Çë²é¿´ÅäÖÃÊÇ·ñÕıÈ·');
+        console.warn('è¯»å–' + func + 'é…ç½®minuteå¼‚å¸¸,è¯·æŸ¥çœ‹é…ç½®æ˜¯å¦æ­£ç¡®');
         data = false;
         return data;
     }
 
-    if(hour.length == 0 && day.length == 0 && minute.length == 0){  //²»ÉèÖÃÈÎºÎÊ±¼äÔò°´ÕÕÃëÊıÀ´Ö´ĞĞ
+    if(hour.length == 0 && day.length == 0 && minute.length == 0){  //ä¸è®¾ç½®ä»»ä½•æ—¶é—´åˆ™æŒ‰ç…§ç§’æ•°æ¥æ‰§è¡Œ
         data = true;
         return data;
     }
 
-    if(day.length == 0 && minute.length == 0){  //ÉèÖÃÌìÊ±¼¶Ôò°´ÕÕÊ±¼¶À´Ö´ĞĞ
+    if(day.length == 0 && minute.length == 0){  //è®¾ç½®å¤©æ—¶çº§åˆ™æŒ‰ç…§æ—¶çº§æ¥æ‰§è¡Œ
         if(hour.length > 0){
             for (let value of minute) {
                 if (value == Number(moment().format('mm'))) {
@@ -233,7 +232,7 @@ common.dealTime = (jsonFile, func) => {
         }
     }
 
-    if(day.length == 0 && hour.length == 0){  //ÉèÖÃ·Ö¼¶Ôò°´ÕÕÊ±¼¶À´Ö´ĞĞ
+    if(day.length == 0 && hour.length == 0){  //è®¾ç½®åˆ†çº§åˆ™æŒ‰ç…§æ—¶çº§æ¥æ‰§è¡Œ
         if(minute.length > 0){
             for (let value of minute) {
                 if (value == Number(moment().format('mm'))) {
@@ -246,7 +245,7 @@ common.dealTime = (jsonFile, func) => {
         }
     }
 
-    if(day.length == 0){   //ÉèÖÃÊ±¼¶Óë·Ö¼¶Ôò°´ÕÕÊ±·Ö¼¶À´Ö´ĞĞ
+    if(day.length == 0){   //è®¾ç½®æ—¶çº§ä¸åˆ†çº§åˆ™æŒ‰ç…§æ—¶åˆ†çº§æ¥æ‰§è¡Œ
         if(hour.length > 0){
             for (let value of hour) {
                 if (value == Number(moment().format('HH'))) {
@@ -261,7 +260,7 @@ common.dealTime = (jsonFile, func) => {
                         return data;
                     }else{
                         data = true;
-                        return data;    //ÉèÖÃÊ±¼¶Ôò°´ÕÕÊ±¼¶À´Ö´ĞĞ
+                        return data;    //è®¾ç½®æ—¶çº§åˆ™æŒ‰ç…§æ—¶çº§æ¥æ‰§è¡Œ
                     }
                 }
             }
@@ -280,7 +279,7 @@ common.dealTime = (jsonFile, func) => {
                                 for (let value of minute) {
                                     if (value == Number(moment().format('mm'))) {
                                         data = true;
-                                        return data;  //ÉèÖÃÌì¼¶¡¢Ê±¼¶¡¢·Ö¼¶Ôò°´ÕÕÌìÊ±·Ö¼¶À´Ö´ĞĞ
+                                        return data;  //è®¾ç½®å¤©çº§ã€æ—¶çº§ã€åˆ†çº§åˆ™æŒ‰ç…§å¤©æ—¶åˆ†çº§æ¥æ‰§è¡Œ
                                     }
                                 }
                                 data = false;
@@ -288,7 +287,7 @@ common.dealTime = (jsonFile, func) => {
                             }
                             else{
                                 data = true;
-                                return data;  //ÉèÖÃÌìÊ±¼¶Ôò°´ÕÕÌìÊ±¼¶À´Ö´ĞĞ
+                                return data;  //è®¾ç½®å¤©æ—¶çº§åˆ™æŒ‰ç…§å¤©æ—¶çº§æ¥æ‰§è¡Œ
                             }
                         }
                     }
@@ -296,7 +295,7 @@ common.dealTime = (jsonFile, func) => {
                     return data;
                 }else{
                     data = true;
-                    return data;  //ÉèÖÃÌì¼¶Ôò°´ÕÕÌì¼¶À´Ö´ĞĞ
+                    return data;  //è®¾ç½®å¤©çº§åˆ™æŒ‰ç…§å¤©çº§æ¥æ‰§è¡Œ
                 }
             }
         }
