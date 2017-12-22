@@ -71,7 +71,7 @@ mongo.ali_open = function (url,user,pass) {
         }else{
            //授权. 这里的username基于admin数据库授权
             var adminDb = db.admin();
-            adminDb.authenticate(user, pass, function(err, result) {
+            adminDb.authenticate(user, pass, function(err, data) {
                 if(err) {
                     console.error("authenticate err:", err);
                     result = null;
